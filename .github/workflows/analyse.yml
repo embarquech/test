@@ -1,0 +1,19 @@
+name: OSV Scanner
+
+on:
+  pull_request:
+  push:
+
+jobs:
+  osv-scan:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run OSV-Scanner
+        uses: google/osv-scanner-action@v1
+        with:
+          scan-args: |
+            -r .
