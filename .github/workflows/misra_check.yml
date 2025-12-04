@@ -1,0 +1,34 @@
+name: MISRA C Check
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  Misra:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install cppcheck
+        run: sudo apt-get install -y cppcheck
+
+      - name: Run MISRA C analysis (compile_commands mode)
+        working-directory: software/nixie_clock_esp32_project
+        run: |
+          cppcheck \
+            --enable=all \
+            --std=c99 \
+            --language=c \
+            --addon=misra \
+            --inline-suppr \
+            --error-exitcode=1 \
+            --suppress=missingInclude \
+            --suppress=missingIncludeSystem \
+            --force \
+            -I main \
+            -I components \
+            -DSTATIC_ANALYSIS=1 \
+            main components
