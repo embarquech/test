@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['cardhandler_2ecpp_0',['CardHandler.cpp',['../CardHandler_8cpp.html',1,'']]],
-  ['cardhandler_2eh_1',['CardHandler.h',['../CardHandler_8h.html',1,'']]]
+  ['cryptnoxwallet_2ecpp_0',['CryptnoxWallet.cpp',['../CryptnoxWallet_8cpp.html',1,'']]],
+  ['cryptnoxwallet_2eh_1',['CryptnoxWallet.h',['../CryptnoxWallet_8h.html',1,'']]]
 ];

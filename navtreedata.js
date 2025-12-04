@@ -46,7 +46,7 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"CardHandler_8cpp.html"
+"CryptnoxWallet_8cpp.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

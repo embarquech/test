@@ -1,0 +1,8 @@
+<map id="examples/CryptnoxWallet.h" name="examples/CryptnoxWallet.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,208,31"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="65,152,149,177"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="104,32,89,79,90,110,98,139,93,140,85,111,84,78,99,30"/>
+<area shape="rect" id="Node000003" href="$PN532Base_8h.html" title=" " alt="" coords="99,79,207,104"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="117,30,140,66,136,69,112,32"/>
+<area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="148,106,124,142,120,139,143,103"/>
+</map>
