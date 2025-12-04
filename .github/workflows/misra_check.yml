@@ -16,7 +16,7 @@ jobs:
         run: sudo apt-get install -y cppcheck
 
       - name: Run MISRA C analysis (compile_commands mode)
-        working-directory: software/nixie_clock_esp32_project
+        working-directory: examples
         run: |
           cppcheck \
             --enable=all \

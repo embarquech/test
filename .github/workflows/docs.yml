@@ -18,14 +18,14 @@ jobs:
 
       # 3. Build Doxygen documentation
       - name: Generate Doxygen docs
-        run: doxygen software/nixie_clock_esp32_project/docs/Doxyfile
+        run: doxygen docs/Doxyfile
 
       # 4. Deploy HTML documentation to GitHub Pages
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: software/nixie_clock_esp32_project/docs/html
+          publish_dir: docs/html
           publish_branch: gh-pages
           allow_empty_commit: false
           keep_files: false
