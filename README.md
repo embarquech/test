@@ -33,7 +33,6 @@ Before using `cryptnox-sdk-arduino`, you must install the following libraries vi
 - **Adafruit_BusIO**
 - **Adafruit_PN532**
 - **Crypto**
-- **PN532Base**
 - **micro-ecc**
 
 ---
