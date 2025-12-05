@@ -20,17 +20,50 @@ PN532I2C::PN532I2C(uint8_t sdaPin, uint8_t sclPin)
  * @return true if the PN532 module was successfully initialized, false otherwise.
  */
 bool PN532I2C::begin() {
-    nfc.begin();
+    bool ret = false;
     uint32_t versiondata;
+
+    nfc.begin();
     if (!getFirmwareVersion(versiondata)) {
         Serial.println("PN532 I2C not found!");
-        return false;
-    }
-    Serial.print("PN532 I2C detected. Firmware version: 0x");
-    Serial.println(versiondata, HEX);
+    } else {
+        uint8_t ic        = (versiondata >> 24) & 0xFF;
+        uint8_t verMajor  = (versiondata >> 16) & 0xFF;
+        uint8_t verMinor  = (versiondata >>  8) & 0xFF;
+        uint8_t flags     =  versiondata        & 0xFF;
 
-    nfc.SAMConfig();
-    return true;
+        Serial.println("PN532 I2C detected");
+        Serial.print(" ├─ Raw firmware: 0x");
+        Serial.println(versiondata, HEX);
+
+        Serial.print(" ├─ IC Chip:       ");
+        Serial.println(ic == 0x32 ? "PN532" : "Unknown");
+
+        Serial.print(" ├─ Firmware:      ");
+        Serial.print(verMajor);
+        Serial.print(".");
+        Serial.println(verMinor);
+
+        Serial.print(" └─ Features:      ");
+
+        bool first = true;
+        if (flags & 0x01) { Serial.print("MIFARE"); first = false; }
+        if (flags & 0x02) { if (!first) Serial.print(" + "); Serial.print("ISO-DEP"); first = false; }
+        if (flags & 0x04) { if (!first) Serial.print(" + "); Serial.print("FeliCa");  first = false; }
+
+        if (first) {
+            Serial.print("Unknown");
+        }
+
+        Serial.print("  (0x");
+        Serial.print(flags, HEX);
+        Serial.println(")");
+
+        nfc.SAMConfig();
+        ret = true;
+    }
+    
+    return ret;
 }
 
 /**
