@@ -12,62 +12,63 @@
 
 /**
  * @def PN532_IRQ
- * @brief IRQ pin of the PN532 module. Use -1 if unused.
+ * @brief IRQ pin of the PN532 module. Set to -1 if not used.
  */
 #define PN532_IRQ   -1
 
 /**
  * @def PN532_RESET
- * @brief RESET pin of the PN532 module. Use -1 if unused.
+ * @brief RESET pin of the PN532 module. Set to -1 if not used.
  */
 #define PN532_RESET -1
 
 /**
- * @brief Instance of CryptnoxWallet using PN532 over I2C.
- */
-CryptnoxWallet wallet(PN532_IRQ, PN532_RESET, &Wire);
-
-/**
- * @brief Flag indicating whether the PN532 module was successfully initialized.
- */
-bool pn532Available = false;
-
-/**
  * @brief Arduino setup function.
  *
- * Initializes the serial port, I2C bus, and the PN532 module through
- * the CryptnoxWallet class. Sets a flag to indicate successful initialization.
+ * Initializes the serial port for debugging and the I2C bus.
+ * The actual PN532 initialization is performed later in loop().
  */
 void setup() {
     Serial.begin(115200);
-    Serial.println("CryptnoxWallet NFC/I2C Example");
 
+    /* Initialize I2C bus */
     Wire.begin();
-
-    pn532Available = wallet.begin();
-    if (!pn532Available) {
-        Serial.println("Warning: PN532 module not found! processCard() will not run.");
-    } else {
-        Serial.println("PN532 successfully initialized!");
-
-        /* Check firmware printing result */
-        if (!wallet.printPN532FirmwareVersion()) {
-            Serial.println("Warning: Failed to read or print PN532 firmware version.");
-        }
-    }
 }
 
 /**
  * @brief Arduino main loop.
  *
- * Continuously checks for the presence of an NFC/ISO-DEP card and
- * processes wallet-specific APDU commands via CryptnoxWallet.
- * If the PN532 module failed to initialize, this function does nothing.
+ * The CryptnoxWallet object is declared static so that it persists
+ * between iterations. The PN532 module is initialized only once
+ * using a static 'initialized' flag.
+ *
+ * On each loop iteration, the code checks for the presence of a
+ * passive NFC/ISO-DEP card and processes wallet APDU commands.
  */
 void loop() {
-    if (pn532Available == true) {
-        (void)wallet.processCard();
+    /* Static wallet object persists between loop iterations */
+    static CryptnoxWallet wallet(PN532_IRQ, PN532_RESET, &Wire);
+
+    /* Flag to ensure PN532 is initialized only once */
+    static bool initialized = false;
+
+    if (!initialized) {
+        /* Initialize the PN532 module */
+        if (wallet.begin()) {
+            Serial.println(F("PN532 initialized"));
+        } else {
+            Serial.println(F("PN532 init failed"));
+            /* Halt program if initialization fails */
+            while(1);
+        }
+
+        /* Set flag so initialization is not repeated */
+        initialized = true;
     }
 
+    /* Process any detected NFC card */
+    (void)wallet.processCard();
+
+    /* Wait 1 second before next loop iteration */
     delay(1000);
 }

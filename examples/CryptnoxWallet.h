@@ -4,9 +4,6 @@
 #include "PN532Base.h"
 #include <Arduino.h>
 
-#define RESPONSE_LENGTH_IN_BYTES 64
-#define RANDOM_BYTES 8
-
 /**
  * @class CryptnoxWallet
  * @brief High-level interface for interacting with a PN532-based wallet.
@@ -113,8 +110,14 @@ public:
     */
     bool printPN532FirmwareVersion();
 
+
+    bool openSecureChannel();
+
 private:
     PN532Base driver; /**< Internal driver for low-level PN532 operations */
+    static int uECC_RNG(uint8_t *dest, unsigned size);
+    void initECC_RNG();
+
 };
 
 #endif // CRYPTNOXWALLET_H
