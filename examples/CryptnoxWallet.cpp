@@ -55,9 +55,17 @@ bool CryptnoxWallet::selectApdu() {
     bool ret = false;
 
     /* Application AID selection command */
-    uint8_t selectApdu[] = { 
-        0x00, 0xA4, 0x04, 0x00, 0x07, 0xA0, 0x00, 0x00, 0x10, 0x00, 0x01, 0x12
+    uint8_t selectApdu[] = {
+        0x00, /* CLA  : ISO interindustry */
+        0xA4, /* INS  : SELECT */
+        0x04, /* P1   : Select by name */
+        0x00, /* P2   : First or only occurrence */
+        0x07, /* Lc   : Length of AID */
+        0xA0, 0x00, 0x00, 0x10, 0x00, 0x01, 0x12  /* AID */
     };
+
+    /* Print APDU */
+    printApdu(selectApdu, sizeof(selectApdu));
 
     /* Response buffer on stack */
     uint8_t response[RESPONSE_LENGTH_IN_BYTES];
@@ -78,35 +86,38 @@ bool CryptnoxWallet::selectApdu() {
 /* Request card certificate (with random nonce appended) */
 bool CryptnoxWallet::getCardCertificate() {
     bool ret = false;
-
-    /* APDU template (last 8 bytes replaced by random nonce) */
-    uint8_t getCardCertificateApdu[] = { 
-        0x80, 0xF8, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-    };
-    
     /* Local response buffer */
     uint8_t response[RESPONSE_LENGTH_IN_BYTES];
     uint8_t responseLength = sizeof(response);
 
-    /* Fill last RANDOM_BYTES with random values */
+    /* APDU template (last 8 bytes replaced by random nonce) */
+    uint8_t getCardCertificateApdu[] = {
+        0x80,  /* CLA */
+        0xF8,  /* INS : OPEN SECURE CHANNEL */
+        0x00,  /* P1 */
+        0x00,  /* P2 */
+        0x08,  /* Lc : 8 bytes nonce */
+    };
+
+    /* Generate 8 random bytes */
+    uint8_t randomBytes[RANDOM_BYTES];
     randomSeed(analogRead(0));
-    for (int i = sizeof(getCardCertificateApdu) - RANDOM_BYTES; i < sizeof(getCardCertificateApdu); i++) {
-        getCardCertificateApdu[i] = random(0, 256);
+    for (int i = 0; i < RANDOM_BYTES; i++) {
+        randomBytes[i] = random(0, 256);
     }
 
-    /* Debug print APDU */
-    Serial.print(F("APDU to send: "));
-    for (int i = 0; i < sizeof(getCardCertificateApdu); i++) {
-        if (getCardCertificateApdu[i] < 16) Serial.print(F("0"));
-        Serial.print(getCardCertificateApdu[i], HEX);
-        Serial.print(F(" "));
-    }
-    Serial.println();
+    /* Final APDU = header + 8 random bytes */
+    uint8_t fullApdu[sizeof(getCardCertificateApdu) + RANDOM_BYTES];
+    memcpy(fullApdu, getCardCertificateApdu, sizeof(getCardCertificateApdu));
+    memcpy(fullApdu + sizeof(getCardCertificateApdu), randomBytes, RANDOM_BYTES);
+
+    /* Print APDU */
+    printApdu(fullApdu, sizeof(fullApdu));
 
     Serial.println(F("Sending getCardCertificate APDU..."));
 
     /* Send APDU */
-    if (driver.sendAPDU(getCardCertificateApdu, sizeof(getCardCertificateApdu), response, responseLength)) {
+    if (driver.sendAPDU(fullApdu, sizeof(fullApdu), response, responseLength)) {
         Serial.println(F("APDU exchange successful!"));
         ret = true;
     } else {
@@ -157,16 +168,10 @@ bool CryptnoxWallet::openSecureChannel() {
     uint8_t response[255];
     uint8_t responseLength = sizeof(response);
 
-    /* Debug print APDU */
-    Serial.print(F("OPC APDU to send: "));
-    for (uint8_t i = 0; i < sizeof(fullApdu); i++) {
-        if (fullApdu[i] < 16) Serial.print(F("0"));
-        Serial.print(fullApdu[i], HEX);
-        Serial.print(F(" "));
-    }
-    Serial.println();
+    /* Print APDU */
+    printApdu(fullApdu, sizeof(fullApdu));
 
-    Serial.println(F("Sending OPEN SECURE CHANNEL APDU..."));
+    Serial.println(F("Sending OpenSecureChannel APDU..."));
 
     /* Send OPC request */
     if (driver.sendAPDU(fullApdu, sizeof(fullApdu), response, responseLength)) {
@@ -185,4 +190,21 @@ int CryptnoxWallet::uECC_RNG(uint8_t *dest, unsigned size) {
         dest[i] = random(0, 256);
     }
     return 1;
+}
+
+/* Helper method to print an APDU in hex format */
+void CryptnoxWallet::printApdu(const uint8_t* apdu, uint8_t length, const char* label = "APDU to send") {
+    Serial.print(label);
+    Serial.print(F(": "));
+    Serial.println();
+    for (uint8_t i = 0; i < length; i++) {
+        if (apdu[i] < 16) Serial.print("0");
+        Serial.print("0x");
+        Serial.print(apdu[i], HEX);
+        Serial.print(" ");
+        
+        /* Wrap line every 16 bytes */
+        if ((i + 1) % 16 == 0 && (i + 1) != length) Serial.println();
+    }
+    Serial.println();
 }

@@ -113,6 +113,9 @@ public:
 
     bool openSecureChannel();
 
+
+    void printApdu(const uint8_t* apdu, uint8_t length, const char* label = "APDU to send");
+
 private:
     PN532Base driver; /**< Internal driver for low-level PN532 operations */
     static int uECC_RNG(uint8_t *dest, unsigned size);

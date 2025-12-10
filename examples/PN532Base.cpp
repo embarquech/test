@@ -149,9 +149,13 @@ bool PN532Base::sendAPDU(const uint8_t* apdu, uint8_t apduLength,
     Serial.println(F(" bytes):"));
 
     for (uint8_t i = 0; i < responseLength; i++) {
-        Serial.print(F("0x"));
-        Serial.print(response[i], HEX);
-        Serial.print(F(" "));
+        Serial.print("0x");
+        if (apdu[i] < 16) Serial.print("0"); // leading zero for single-digit hex
+        Serial.print(apdu[i], HEX);
+        Serial.print(" ");
+
+        /* Wrap line every 16 bytes */
+        if ((i + 1) % 16 == 0 && (i + 1) != responseLength) Serial.println();
     }
     Serial.println();
 
