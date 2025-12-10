@@ -110,17 +110,33 @@ public:
     */
     bool printPN532FirmwareVersion();
 
-
+    /**
+    * @brief Establish a secure channel with the card using ECC.
+    * @return true if successful, false otherwise.
+    */
     bool openSecureChannel();
 
-
+    /**
+    * @brief Print an APDU in hex format with optional label.
+    * @param apdu Pointer to the APDU bytes.
+    * @param length Number of bytes in the APDU.
+    * @param label Optional label for printing (default: "APDU to send").
+    */
     void printApdu(const uint8_t* apdu, uint8_t length, const char* label = "APDU to send");
 
 private:
-    PN532Base driver; /**< Internal driver for low-level PN532 operations */
+    PN532Base driver; /**< PN532 driver for low-level NFC operations */
+    
+    /**
+     * @brief RNG callback for micro-ecc library.
+     * @param dest Pointer to buffer to fill with random bytes.
+     * @param size Number of bytes to generate.
+     * @return 1 on success.
+     */
     static int uECC_RNG(uint8_t *dest, unsigned size);
-    void initECC_RNG();
 
+    /** @brief Initialize the ECC RNG for micro-ecc library. */
+    void initECC_RNG();
 };
 
 #endif // CRYPTNOXWALLET_H

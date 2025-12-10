@@ -184,7 +184,14 @@ bool CryptnoxWallet::openSecureChannel() {
     return ret;
 }
 
-/* RNG callback for micro-ecc library */
+/**
+ * @brief RNG callback used by the micro-ecc library.
+ * 
+ * Fills the provided buffer with cryptographically random bytes.
+ * @param dest Pointer to the buffer to fill.
+ * @param size Number of bytes to generate.
+ * @return 1 on success.
+ */
 int CryptnoxWallet::uECC_RNG(uint8_t *dest, unsigned size) {
     for (unsigned i = 0; i < size; i++) {
         dest[i] = random(0, 256);
@@ -192,7 +199,14 @@ int CryptnoxWallet::uECC_RNG(uint8_t *dest, unsigned size) {
     return 1;
 }
 
-/* Helper method to print an APDU in hex format */
+/**
+ * @brief Print an APDU in hexadecimal format to Serial for debugging.
+ * 
+ * Each byte is printed as 0xXX. Lines wrap every 16 bytes for readability.
+ * @param apdu Pointer to the APDU byte array.
+ * @param length Number of bytes in the APDU.
+ * @param label Optional label to prepend (default: "APDU to send").
+ */
 void CryptnoxWallet::printApdu(const uint8_t* apdu, uint8_t length, const char* label = "APDU to send") {
     Serial.print(label);
     Serial.print(F(": "));
@@ -206,5 +220,6 @@ void CryptnoxWallet::printApdu(const uint8_t* apdu, uint8_t length, const char* 
         /* Wrap line every 16 bytes */
         if ((i + 1) % 16 == 0 && (i + 1) != length) Serial.println();
     }
+    
     Serial.println();
 }
