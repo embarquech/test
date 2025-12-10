@@ -124,9 +124,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a67b951c652d29c940a16867e9a0d8c3d" id="r_a67b951c652d29c940a16867e9a0d8c3d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCryptnoxWallet.html#a67b951c652d29c940a16867e9a0d8c3d">selectApdu</a> ()</td></tr>
 <tr class="memdesc:a67b951c652d29c940a16867e9a0d8c3d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send the SELECT APDU to select the wallet application.  <br /></td></tr>
 <tr class="separator:a67b951c652d29c940a16867e9a0d8c3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad2ffb5c8f2c667283b9ad4153285c268" id="r_ad2ffb5c8f2c667283b9ad4153285c268"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCryptnoxWallet.html#ad2ffb5c8f2c667283b9ad4153285c268">getCardCertificate</a> ()</td></tr>
-<tr class="memdesc:ad2ffb5c8f2c667283b9ad4153285c268"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send the GET CARD CERTIFICATE APDU.  <br /></td></tr>
-<tr class="separator:ad2ffb5c8f2c667283b9ad4153285c268"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaf43c88ebaec9ff670c8b3ce01376c04" id="r_aaf43c88ebaec9ff670c8b3ce01376c04"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCryptnoxWallet.html#aaf43c88ebaec9ff670c8b3ce01376c04">getCardCertificate</a> (uint8_t *response, uint8_t &amp;len)</td></tr>
+<tr class="memdesc:aaf43c88ebaec9ff670c8b3ce01376c04"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send get card certificate APDU with random challenge.  <br /></td></tr>
+<tr class="separator:aaf43c88ebaec9ff670c8b3ce01376c04"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2e90b4ce65336ba84d371deab5144274" id="r_a2e90b4ce65336ba84d371deab5144274"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCryptnoxWallet.html#a2e90b4ce65336ba84d371deab5144274">readUID</a> (uint8_t *uidBuffer, uint8_t &amp;uidLength)</td></tr>
 <tr class="memdesc:a2e90b4ce65336ba84d371deab5144274"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read the UID of a detected card.  <br /></td></tr>
 <tr class="separator:a2e90b4ce65336ba84d371deab5144274"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -375,8 +375,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ad2ffb5c8f2c667283b9ad4153285c268" name="ad2ffb5c8f2c667283b9ad4153285c268"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad2ffb5c8f2c667283b9ad4153285c268">&#9670;&#160;</a></span>getCardCertificate()</h2>
+<a id="aaf43c88ebaec9ff670c8b3ce01376c04" name="aaf43c88ebaec9ff670c8b3ce01376c04"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaf43c88ebaec9ff670c8b3ce01376c04">&#9670;&#160;</a></span>getCardCertificate()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -384,14 +384,32 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">bool CryptnoxWallet::getCardCertificate </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>response</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">uint8_t &amp;&#160;</td>
+          <td class="paramname"><em>responseLength</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Send the GET CARD CERTIFICATE APDU. </p>
-<p>Generates RANDOM_BYTES random bytes for challenge and sends the APDU.</p>
+<p>Send get card certificate APDU with random challenge. </p>
+<p>Generates RANDOM_BYTES random bytes and appends them to the APDU.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">response</td><td>Buffer to store the card response. </td></tr>
+    <tr><td class="paramname">responseLength</td><td>Input: buffer size, Output: actual response length. </td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="section return"><dt>Returns</dt><dd>true if the APDU exchange succeeded, false otherwise. </dd></dl>
 
 </div>

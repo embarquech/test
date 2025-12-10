@@ -20,7 +20,7 @@ var NAVTREEINDEX0 =
 "classCryptnoxWallet.html#aa2275c4d8e65abc791159ffc9c3b3dc9":[0,0,0,1],
 "classCryptnoxWallet.html#aa394fe6bc19d57c4a9d89a303f7e664d":[0,0,0,4],
 "classCryptnoxWallet.html#aa4ce170f582927c6e8e8d4e9dc4d412d":[0,0,0,9],
-"classCryptnoxWallet.html#ad2ffb5c8f2c667283b9ad4153285c268":[0,0,0,5],
+"classCryptnoxWallet.html#aaf43c88ebaec9ff670c8b3ce01376c04":[0,0,0,5],
 "classCryptnoxWallet.html#af35119491a036609cf251a9bf92ef154":[0,0,0,0],
 "classPN532Base.html":[0,0,1],
 "classPN532Base.html#a0ca0113b0bdc930bbcdc0b85d6e31f22":[0,0,1,4],
