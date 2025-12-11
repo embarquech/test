@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['opensecurechannel_0',['openSecureChannel',['../classCryptnoxWallet.html#a7aceec616afcc2eaf23890d2319b7d62',1,'CryptnoxWallet']]]
+  ['mutuallyauthenticate_0',['mutuallyAuthenticate',['../classCryptnoxWallet.html#a7fc99c0393a54856d715eb04a5752a18',1,'CryptnoxWallet']]]
 ];
