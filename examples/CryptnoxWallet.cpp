@@ -81,7 +81,12 @@ bool CryptnoxWallet::selectApdu() {
 
     /* Send SELECT command */
     if (driver.sendAPDU(selectApdu, sizeof(selectApdu), response, responseLength)) {
-        ret = true;
+        if (checkStatusWord(response,responseLength, 0x90, 0x00)) {
+            Serial.println(F("APDU exchange successful!"));
+            ret = true;
+        } else {
+            Serial.println(F("APDU SW1/SW2 not expected. Error."));
+        }
     } else {
         Serial.println(F("APDU select failed."));
     }
@@ -130,8 +135,12 @@ bool CryptnoxWallet::getCardCertificate(uint8_t* response, uint8_t &responseLeng
 
         /* Send APDU */
         if (driver.sendAPDU(fullApdu, sizeof(fullApdu), response, responseLength)) {
-            Serial.println(F("APDU exchange successful!"));
-            ret = true;
+            if (checkStatusWord(response,responseLength, 0x90, 0x00)) {
+                Serial.println(F("APDU exchange successful!"));
+                ret = true;
+            } else {
+                Serial.println(F("APDU SW1/SW2 not expected. Error."));
+            }
         } else {
             Serial.println(F("APDU getCardCertificate failed."));
         }
@@ -188,8 +197,12 @@ bool CryptnoxWallet::openSecureChannel() {
 
     /* Send OPC request */
     if (driver.sendAPDU(fullApdu, sizeof(fullApdu), response, responseLength)) {
-        Serial.println(F("APDU exchange successful!"));
-        ret = true;
+        if (checkStatusWord(response,responseLength, 0x90, 0x00)) {
+            Serial.println(F("APDU exchange successful!"));
+            ret = true;
+        } else {
+            Serial.println(F("APDU SW1/SW2 not expected. Error."));
+        }
     } else {
         Serial.println(F("APDU exchange failed."));
     }
@@ -235,6 +248,40 @@ void CryptnoxWallet::printApdu(const uint8_t* apdu, uint8_t length, const char* 
     }
     
     Serial.println();
+}
+
+/**
+ * @brief Checks the status word (SW1/SW2) at the end of an APDU response.
+ * 
+ * @param response        Pointer to the APDU response buffer.
+ * @param responseLength  Actual length of the response buffer.
+ * @param sw1Expected     Expected value for SW1 (e.g., 0x90).
+ * @param sw2Expected     Expected value for SW2 (e.g., 0x00).
+ * @return true if the last two bytes match SW1/SW2, false otherwise.
+ */
+bool CryptnoxWallet::checkStatusWord(const uint8_t* response,
+                                     uint8_t responseLength,
+                                     uint8_t sw1Expected,
+                                     uint8_t sw2Expected) 
+{
+    if (response == NULL || responseLength < 2) {
+        Serial.println(F("checkStatusWord: response too short."));
+        return false;
+    }
+
+    uint8_t sw1 = response[responseLength - 2];
+    uint8_t sw2 = response[responseLength - 1];
+
+    Serial.print(F("Received SW1/SW2: "));
+    Serial.print(F("0x"));
+    if (sw1 < 16) Serial.print("0");
+    Serial.print(sw1, HEX);
+    Serial.print(F(" "));
+    Serial.print(F("0x"));
+    if (sw2 < 16) Serial.print("0");
+    Serial.println(sw2, HEX);
+
+    return (sw1 == sw1Expected && sw2 == sw2Expected);
 }
 
 /**

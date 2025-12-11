@@ -138,6 +138,17 @@ public:
     */
     void derivePairingKeyFromPUK(const uint8_t* puk, size_t pukLength, uint8_t* pairingKey); 
 
+    /**
+    * @brief Checks the status word (SW1/SW2) at the end of an APDU response.
+    * 
+    * @param response        Pointer to the APDU response buffer.
+    * @param responseLength  Actual length of the response buffer.
+    * @param sw1Expected     Expected value for SW1 (e.g., 0x90).
+    * @param sw2Expected     Expected value for SW2 (e.g., 0x00).
+    * @return true if the last two bytes match SW1/SW2, false otherwise.
+    */
+    bool checkStatusWord(const uint8_t* response, uint8_t responseLength, uint8_t sw1Expected, uint8_t sw2Expected);
+
 private:
     PN532Base driver; /**< PN532 driver for low-level NFC operations */
     
