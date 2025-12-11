@@ -18,7 +18,7 @@ It allows performing basic operations with the card, such as secure communicatio
 ## Supported hardware
 
 - **Cryptnox Smart cards** 💳
-- **Arduino platforms** (e.g., Arduino Uno) with **PN532 NFC modules**
+- **Arduino platforms** (e.g., Arduino Uno R4) with **PN532 NFC modules**
 
 Get your cards here: [shop.cryptnox.com](https://shop.cryptnox.com)
 
@@ -58,10 +58,31 @@ Before using `cryptnox-sdk-arduino`, you must install the following libraries vi
 
 ## Hardware setup
 
+> [!CAUTION]
+> Always double-check the wiring before powering the Arduino to prevent damage.
 
-###  Arduino Uno and PN532 NFC (I²C)
+###  Arduino Uno R4 and PN532 NFC - SPI interface
 
-The PN532 module supports multiple interfaces (I²C, SPI, UART). This setup specifically uses I²C.
+| PN532 Pin | Arduino Pin | Wire Color |
+|-----------|-------------|------------|
+| VCC       | 5V          | Red        |
+| GND       | GND         | Black      |
+| SCK       | D13         | Blue       |
+| MISO      | D12         | Green      |
+| MOSI      | D11         | Yellow     |
+| SS        | D10         | Violet     |
+
+
+> [!IMPORTANT]  
+> Make sure the I²C switches on the PN532 module are configured correctly for I²C communication:
+>
+> - **Switch 0** → HIGH  
+> - **Switch 1** → LOW
+
+<img width="800" alt="arduino_uno_pn532_spi" src="https://github.com/user-attachments/assets/87c2bba7-0376-45f8-a498-53b6468fc546" />
+
+
+###  Arduino Uno R4 and PN532 NFC - I²C interface
 
 | PN532 Pin | Arduino Pin | Wire Color |
 |-----------|------------|------------|
@@ -69,9 +90,8 @@ The PN532 module supports multiple interfaces (I²C, SPI, UART). This setup spec
 | GND       | GND        | Black      |
 | SDA       | A4         | Yellow     |
 | SCL       | A5         | Blue       |
-
-> [!CAUTION]
-> Always double-check the wiring before powering the Arduino to prevent damage.
+| RST       | D2         | Grey       |
+| IRQ       | D3         | Violet     |
 
 > [!IMPORTANT]  
 > Make sure the I²C switches on the PN532 module are configured correctly for I²C communication:
@@ -79,7 +99,7 @@ The PN532 module supports multiple interfaces (I²C, SPI, UART). This setup spec
 > - **Switch 0** → LOW  
 > - **Switch 1** → HIGH
 
-<img width="800" alt="arduino_uno_pn532_i2c_bb" src="https://github.com/user-attachments/assets/278a5228-1621-4577-ad0b-c8f1f8929e93" />
+<img width="800" alt="arduino_uno_pn532_i2c" src="https://github.com/user-attachments/assets/c040007c-b9a6-4bf7-861b-d6b28d195193" />
 
 ---
 
