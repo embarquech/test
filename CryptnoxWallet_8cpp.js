@@ -1,5 +1,8 @@
 var CryptnoxWallet_8cpp =
 [
+    [ "CARDEPHEMERALPUBKEY_SIZE", "CryptnoxWallet_8cpp.html#a25455ff28b2a52bf37f6edf188eac678", null ],
+    [ "CLIENT_PRIVATE_KEY_SIZE", "CryptnoxWallet_8cpp.html#a3d9fc2cad2d26fab3fa80d87949055df", null ],
+    [ "CLIENT_PUBLIC_KEY_SIZE", "CryptnoxWallet_8cpp.html#ad1ecaf611e7c30f8cad8d7e54e3407f4", null ],
     [ "COMMON_PAIRING_DATA", "CryptnoxWallet_8cpp.html#a627ec56cbcf257a02e062b8118206869", null ],
     [ "GETCARDCERTIFICATE_IN_BYTES", "CryptnoxWallet_8cpp.html#add6226a3b0f8dde62724922f00f0333a", null ],
     [ "OPENSECURECHANNEL_SALT_IN_BYTES", "CryptnoxWallet_8cpp.html#a5844cc731e45bc22143e8b5df0e5bbbe", null ],

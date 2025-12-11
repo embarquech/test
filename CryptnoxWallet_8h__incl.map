@@ -1,9 +1,11 @@
 <map id="examples/CryptnoxWallet.h" name="examples/CryptnoxWallet.h">
-<area shape="rect" id="Node000001" title=" " alt="" coords="31,5,234,31"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="91,5,294,31"/>
 <area shape="rect" id="Node000002" href="$PN532Base_8h.html" title=" " alt="" coords="19,79,127,104"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="125,33,93,70,89,66,121,29"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="175,33,106,74,103,69,172,28"/>
 <area shape="rect" id="Node000004" title=" " alt="" coords="151,79,235,104"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="145,29,176,66,172,70,141,33"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="195,31,195,65,190,65,190,31"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="259,79,327,104"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="210,29,267,68,264,73,207,33"/>
 <area shape="rect" id="Node000003" title=" " alt="" coords="5,152,140,177"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="75,104,75,138,70,138,70,104"/>
 </map>

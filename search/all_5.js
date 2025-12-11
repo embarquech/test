@@ -1,10 +1,5 @@
 var searchData=
 [
-  ['pn532base_0',['PN532Base',['../classPN532Base.html',1,'']]],
-  ['pn532base_2ecpp_1',['PN532Base.cpp',['../PN532Base_8cpp.html',1,'']]],
-  ['pn532base_2eh_2',['PN532Base.h',['../PN532Base_8h.html',1,'']]],
-  ['printapdu_3',['printApdu',['../classCryptnoxWallet.html#a0c4d176b4cfb46e8705db2eae661635d',1,'CryptnoxWallet']]],
-  ['printfirmwareversion_4',['printFirmwareVersion',['../classPN532Base.html#a4c49b74ef88c3a2ab2c7a1db582c20ee',1,'PN532Base']]],
-  ['printpn532firmwareversion_5',['printPN532FirmwareVersion',['../classCryptnoxWallet.html#a9342637fe7352965de1aefb74f082a6c',1,'CryptnoxWallet']]],
-  ['processcard_6',['processCard',['../classCryptnoxWallet.html#aa4ce170f582927c6e8e8d4e9dc4d412d',1,'CryptnoxWallet']]]
+  ['opensecurechannel_0',['openSecureChannel',['../classCryptnoxWallet.html#a5e31e6d45992e39db06b8a05ca70bddd',1,'CryptnoxWallet']]],
+  ['opensecurechannel_5fsalt_5fin_5fbytes_1',['OPENSECURECHANNEL_SALT_IN_BYTES',['../CryptnoxWallet_8cpp.html#a5844cc731e45bc22143e8b5df0e5bbbe',1,'CryptnoxWallet.cpp']]]
 ];
